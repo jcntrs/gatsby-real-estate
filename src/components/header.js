@@ -1,9 +1,17 @@
 import React from 'react';
-import { Link } from 'gatsby';
+import { Link, useStaticQuery, graphql } from 'gatsby';
 import { css } from '@emotion/core';
 import Navigation from './Navigation';
 
 const Header = () => {
+    const { logo } = useStaticQuery(graphql`
+        query {
+            logo: file(relativePath: {eq: "logo.svg"}) {
+            publicURL
+            }
+        }
+    `);
+
     return (
         <header css={css`
             background-color: #0d283b;
@@ -20,7 +28,9 @@ const Header = () => {
                     justify-content: space-between;
                 }
             `}>
-                <Link to="/">Bienes Raices</Link>
+                <Link to="/">
+                    <img src={logo.publicURL} alt="Logotipo" />
+                </Link>
                 <Navigation />
             </div>
         </header>
